@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{send data to Android applications on Android devices}
   s.description = %q{gcm is a service that helps developers send data from servers to their Android applications on Android devices.}
   s.license     = "MIT"
-  
+
   s.rubyforge_project = "gcm"
 
   s.files         = `git ls-files`.split("\n")
@@ -20,6 +20,4 @@ Gem::Specification.new do |s|
 
   s.add_dependency('httparty')
   s.add_dependency('json')
-
-  s.add_development_dependency('rspec')
 end
