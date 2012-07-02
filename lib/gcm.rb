@@ -45,7 +45,7 @@ class GCM
   private
 
   def build_post_body(registration_ids, options={})
-    body = {registration_ids: registration_ids}
+    body = {registration_ids: registration_ids}.merge(options)
     #raise exception if options[:time_to_live] && !options[:collapse_key]
   end
 

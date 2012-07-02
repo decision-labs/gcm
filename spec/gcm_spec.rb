@@ -38,5 +38,21 @@ describe GCM do
       gcm = GCM.new(api_key)
       gcm.send_notification(registration_ids).should eq({body: {}, headers: {}, status: 200})
     end
+
+    context "send notification with data" do
+      let!(:stub_with_data){
+        stub_request(:post, GCM::PUSH_URL).
+          with(body: "{\"registration_ids\":[\"42\"],\"data\":{\"score\":\"5x1\",\"time\":\"15:10\"}}",
+               headers: valid_request_headers ).
+          to_return(status: 200, body: "", headers: {})
+      }
+      before do
+      end
+      it "should send the data in a post request to gcm" do
+        gcm = GCM.new(api_key)
+        gcm.send_notification(registration_ids, { data: { score: "5x1", time: "15:10"} })
+        stub_with_data.should have_been_requested
+      end
+    end
   end
 end
