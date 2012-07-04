@@ -16,13 +16,19 @@ An Android device running 2.0 or newer and an API key as per [GCM getting starte
 Sending notifications:
 
 ```ruby
+require 'gcm'
+
 gcm = GCM.new(api_key)
 registration_ids= ["12", "13"] # an array of one or more client registration IDs
-options = {body: data: {key: "value"}}
-response = gcm.send_notification(registration_ids, options)
+response = gcm.send_notification(registration_ids, {"message" => "test123"})
 ```
 
 Currently `response` is just a hash containing the response `body`, `headers` and `status`.
+
+If the above code is stored in a file like trigger_gcm.rb, thats how you can call it.
+````bash
+ruby -rubygems trigger_gcm.rb
+```
 
 ##Copyright
 
