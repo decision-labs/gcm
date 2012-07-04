@@ -20,12 +20,13 @@ require 'gcm'
 
 gcm = GCM.new(api_key)
 registration_ids= ["12", "13"] # an array of one or more client registration IDs
-response = gcm.send_notification(registration_ids, data: {"message" => "test123"})
+options = {data: {score: "123"}, collapse_key: "updated_score"}
+response = gcm.send_notification(registration_ids, options)
 ```
 
 Currently `response` is just a hash containing the response `body`, `headers` and `status`.
 
-If the above code is stored in a file like trigger_gcm.rb, thats how you can call it.
+If the above code is stored in a file like `trigger_gcm.rb`, thats how you can call it.
 
 	$ ruby -rubygems trigger_gcm.rb
 
