@@ -20,7 +20,7 @@ require 'gcm'
 
 gcm = GCM.new(api_key)
 registration_ids= ["12", "13"] # an array of one or more client registration IDs
-response = gcm.send_notification(registration_ids, {"message" => "test123"})
+response = gcm.send_notification(registration_ids, data: {"message" => "test123"})
 ```
 
 Currently `response` is just a hash containing the response `body`, `headers` and `status`.
