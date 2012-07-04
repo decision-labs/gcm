@@ -26,9 +26,8 @@ response = gcm.send_notification(registration_ids, data: {"message" => "test123"
 Currently `response` is just a hash containing the response `body`, `headers` and `status`.
 
 If the above code is stored in a file like trigger_gcm.rb, thats how you can call it.
-````bash
-ruby -rubygems trigger_gcm.rb
-```
+
+	$ ruby -rubygems trigger_gcm.rb
 
 ##Copyright
 
