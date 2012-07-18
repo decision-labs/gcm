@@ -36,7 +36,7 @@ describe GCM do
 
     it "should send notification using POST to GCM server" do
       gcm = GCM.new(api_key)
-      gcm.send_notification(registration_ids).should eq({body: {}, headers: {}, status: 200})
+      gcm.send_notification(registration_ids).should eq({response: 'success', body: {}, headers: {}, status_code: 200})
     end
 
     context "send notification with data" do
@@ -52,6 +52,82 @@ describe GCM do
         gcm = GCM.new(api_key)
         gcm.send_notification(registration_ids, { data: { score: "5x1", time: "15:10"} })
         stub_with_data.should have_been_requested
+      end
+    end
+    context "send notification without success" do
+      context "send notification with status code 400" do
+        before do
+          stub_request(:post, GCM::PUSH_URL).with(
+            body: valid_request_body.to_json,
+            headers: valid_request_headers
+          ).to_return(
+            # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
+            body: {},
+            headers: {},
+            status: 400
+          )
+        end
+        it "should not send notification due to 400" do
+          gcm = GCM.new(api_key)
+          gcm.send_notification(registration_ids).should eq({:response=>"Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.", :status_code=>400})
+        end
+      end
+
+      context "send notification with status code 401" do
+        before do
+          stub_request(:post, GCM::PUSH_URL).with(
+            body: valid_request_body.to_json,
+            headers: valid_request_headers
+          ).to_return(
+            # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
+            body: {},
+            headers: {},
+            status: 401
+          )
+        end
+
+        it "should not send notification due to 401" do
+          gcm = GCM.new(api_key)
+          gcm.send_notification(registration_ids).should eq({:response=>"There was an error authenticating the sender account.", :status_code=>401})
+        end
+      end
+
+      context "send notification with status code 500" do
+        before do
+          stub_request(:post, GCM::PUSH_URL).with(
+            body: valid_request_body.to_json,
+            headers: valid_request_headers
+          ).to_return(
+            # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
+            body: {},
+            headers: {},
+            status: 500
+          )
+        end
+
+        it "should not send notification due to 500" do
+          gcm = GCM.new(api_key)
+          gcm.send_notification(registration_ids).should eq({response: 'There was an internal error in the GCM server while trying to process the request.', status_code: 500})
+        end
+      end
+
+      context "send notification with status code 503" do
+        before do
+          stub_request(:post, GCM::PUSH_URL).with(
+            body: valid_request_body.to_json,
+            headers: valid_request_headers
+          ).to_return(
+            # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
+            body: {},
+            headers: {},
+            status: 503
+          )
+        end
+
+        it "should not send notification due to 503" do
+          gcm = GCM.new(api_key)
+          gcm.send_notification(registration_ids).should eq({response: 'Server is temporarily unavailable.', status_code: 503})
+        end
       end
     end
   end
