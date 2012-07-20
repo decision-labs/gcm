@@ -1,4 +1,5 @@
 # Google Cloud Messaging for Android (GCM)
+[![Build Status](https://secure.travis-ci.org/shamithc/gcm.png?branch=master)](http://travis-ci.org/shamithc/gcm)
 
 GCM sends notifications to Android devices via [GCM](http://developer.android.com/guide/google/gcm/gcm.html).
 
