@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="GCM sending notification send notification without success send notification with status code 401" tests="1" time="0.001516051" failures="0" errors="0" skipped="0">
+  <testcase name="GCM sending notification send notification without success send notification with status code 401 should not send notification due to 401" time="0.001371757">
+  </testcase>
+  <system-out>
+  </system-out>
+  <system-err>
+  </system-err>
+</testsuite>

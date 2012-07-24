@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "gcm"
-  s.version     = "0.0.2"
+  s.version     = "0.0.3"
   s.authors     = ["Amro Mousa", "Kashif Rasul", "Shoaib Burq"]
   s.email       = ["amromousa@gmail.com", "kashif@spacialdb.com", "shoaib@spacialdb.com"]
   s.homepage    = "http://github.com/spacialdb/gcm"
