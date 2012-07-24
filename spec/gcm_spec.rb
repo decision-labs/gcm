@@ -54,59 +54,127 @@ describe GCM do
         stub_with_data.should have_been_requested
       end
     end
+<<<<<<< HEAD
     context "On failure" do
       
       it "should not send notification due to 400" do
+=======
+
+    context " when send_notification responds with failure" do
+
+      let(:mock_request_attributes) do
+        {
+          body: valid_request_body.to_json,
+          headers: valid_request_headers
+        }
+      end
+
+      subject { GCM.new(api_key) }
+
+      context "on failure code 400" do
+        before do
+>>>>>>> Revath/master
           stub_request(:post, GCM::PUSH_URL).with(
-            body: valid_request_body.to_json,
-            headers: valid_request_headers
+            mock_request_attributes
           ).to_return(
             # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
             body: {},
             headers: {},
             status: 400
           )
+<<<<<<< HEAD
           subject.send_notification(registration_ids).should eq({:response=>"Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.", :status_code=>400})
       end
  
       it "should not send notification due to 401" do
+=======
+        end
+        it "should not send notification due to 400" do
+          subject.send_notification(registration_ids).should eq({
+            :response => "Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.",
+            :status_code=>400
+          })
+        end
+      end
+
+      context "on failure code 401" do
+        before do
+>>>>>>> Revath/master
           stub_request(:post, GCM::PUSH_URL).with(
-            body: valid_request_body.to_json,
-            headers: valid_request_headers
+            mock_request_attributes
           ).to_return(
             # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
             body: {},
             headers: {},
             status: 401
           )
+<<<<<<< HEAD
           subject.send_notification(registration_ids).should eq({:response=>"There was an error authenticating the sender account.", :status_code=>401})
       end
       
       it "should not send notification due to 500" do
+=======
+        end
+
+        it "should not send notification due to 401" do
+          subject.send_notification(registration_ids).should eq({
+            :response=>"There was an error authenticating the sender account.",
+            :status_code=>401
+          })
+        end
+      end
+
+      context "on failure code 500" do
+        before do
+>>>>>>> Revath/master
           stub_request(:post, GCM::PUSH_URL).with(
-            body: valid_request_body.to_json,
-            headers: valid_request_headers
+            mock_request_attributes
           ).to_return(
             # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
             body: {},
             headers: {},
             status: 500
           )
+<<<<<<< HEAD
           subject.send_notification(registration_ids).should eq({response: 'There was an internal error in the GCM server while trying to process the request.', status_code: 500})
       end
   
       it "should not send notification due to 503" do
+=======
+        end
+
+        it "should not send notification due to 500" do
+          subject.send_notification(registration_ids).should eq({
+            response: 'There was an internal error in the GCM server while trying to process the request.',
+            status_code: 500
+          })
+        end
+      end
+
+      context "on failure code 503" do
+        before do
+>>>>>>> Revath/master
           stub_request(:post, GCM::PUSH_URL).with(
-            body: valid_request_body.to_json,
-            headers: valid_request_headers
+            mock_request_attributes
           ).to_return(
             # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
             body: {},
             headers: {},
             status: 503
           )
+<<<<<<< HEAD
           #gcm = GCM.new(api_key)
           subject.send_notification(registration_ids).should eq({response: 'Server is temporarily unavailable.', status_code: 503})
+=======
+        end
+
+        it "should not send notification due to 503" do
+          subject.send_notification(registration_ids).should eq({
+            response: 'Server is temporarily unavailable.',
+            status_code: 503
+          })
+        end
+>>>>>>> Revath/master
       end
     end
   end
