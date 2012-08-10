@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="GCM sending notification send notification with data" tests="1" time="0.00176368" failures="0" errors="0" skipped="0">
-  <testcase name="GCM sending notification send notification with data should send the data in a post request to gcm" time="0.001614489">
-  </testcase>
-  <system-out>
-  </system-out>
-  <system-err>
-  </system-err>
-</testsuite>
