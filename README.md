@@ -13,7 +13,6 @@ An Android device running 2.0 or newer and an API key as per [GCM getting starte
 
 ##Usage
 
-
 Sending notifications:
 
 ```ruby
@@ -31,7 +30,7 @@ If the above code is stored in a file like `trigger_gcm.rb`, thats how you can c
 
 	$ ruby -rubygems trigger_gcm.rb
 
-##Copyright
+##MIT License
 
 * Copyright (c) 2012 Kashif Rasul and Shoaib Burq. See LICENSE.txt for details.
 

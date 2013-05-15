@@ -16,14 +16,14 @@ class GCM
   end
 
   # {
-  # "collapse_key": "score_update",
-  # "time_to_live": 108,
-  # "delay_while_idle": true,
-  # "registration_ids": ["4", "8", "15", "16", "23", "42"],
-  # "data" : {
-  # "score": "5x1",
-  # "time": "15:10"
-  # }
+  #   "collapse_key": "score_update",
+  #   "time_to_live": 108,
+  #   "delay_while_idle": true,
+  #   "registration_ids": ["4", "8", "15", "16", "23", "42"],
+  #   "data" : {
+  #     "score": "5x1",
+  #     "time": "15:10"
+  #   }
   # }
   # gcm = GCM.new(api_key)
   # gcm.send_notification({registration_ids: ["4sdsx", "8sdsd"], data: {score: "5x1"}})
@@ -46,9 +46,7 @@ class GCM
   private
 
   def build_post_body(registration_ids, options={})
-    body = {registration_ids: registration_ids}.merge(options)
-    #p body
-    #raise exception if options[:time_to_live] && !options[:collapse_key]
+    {registration_ids: registration_ids}.merge(options)
   end
 
   def build_response(response)
