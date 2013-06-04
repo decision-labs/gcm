@@ -34,8 +34,6 @@ If the above code is stored in a file like `trigger_gcm.rb`, thats how you can c
 
 * Copyright (c) 2012 Kashif Rasul and Shoaib Burq. See LICENSE.txt for details.
 
-##Thanks
+##Many thanks to all the contributors
 
-This gem is based on a fork of the older Google push service:
-
-* [Amro Mousa](https://github.com/amro/c2dm/)
+* [Contributors](https://github.com/spacialdb/gcm/contributors)
