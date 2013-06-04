@@ -11,6 +11,12 @@ GCM sends notifications to Android devices via [GCM](http://developer.android.co
 
 An Android device running 2.0 or newer and an API key as per [GCM getting started guide](http://developer.android.com/guide/google/gcm/gs.html).
 
+One of the following, tested ruby version:
+
+* `1.8.7`
+* `1.9.x`
+* `2.0.0`
+
 ##Usage
 
 Sending notifications:
