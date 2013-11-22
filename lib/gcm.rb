@@ -39,7 +39,7 @@ class GCM
     }
 
     response = self.class.post('', params)
-    build_response(response)
+    build_response(response, registration_ids)
   end
 
   private
@@ -48,11 +48,11 @@ class GCM
     { :registration_ids => registration_ids }.merge(options)
   end
 
-  def build_response(response)
+  def build_response(response, registration_ids)
     case response.code
       when 200
         body = response.body || {}
-        { :response => 'success', :body => body, :headers => response.headers, :status_code => response.code }
+        { :response => 'success', :body => body, :headers => response.headers, :status_code => response.code, :canonical_ids => build_canonical_ids(body, registration_ids) }
       when 400
         { :response => 'Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.', :status_code => response.code }
       when 401
@@ -62,5 +62,22 @@ class GCM
       when 503
         { :response => 'Server is temporarily unavailable.', :status_code => response.code }
     end
+  end
+
+  def build_canonical_ids(body, registration_ids)
+    canonical_ids = []
+    unless body.empty?
+      body = JSON.parse(body)
+      if body['canonical_ids'] > 0
+        body['results'].each_with_index do |result, index|
+          canonical_ids << {:old => registration_ids[index], :new=> result['registration_id']} if has_canonical_id?(result)
+        end
+      end
+    end
+    canonical_ids
+  end
+
+  def has_canonical_id?(result)
+    !result['registration_id'].nil?
   end
 end
