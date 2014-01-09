@@ -4,9 +4,10 @@ $:.push File.expand_path("../lib", __FILE__)
 Gem::Specification.new do |s|
   s.name        = "gcm"
   s.version     = "0.0.4"
-  s.authors     = ["Amro Mousa", "Kashif Rasul", "Shoaib Burq"]
+  s.platform    = Gem::Platform::RUBY
+  s.authors     = ["Kashif Rasul", "Shoaib Burq"]
   s.email       = ["amromousa@gmail.com", "kashif@spacialdb.com", "shoaib@spacialdb.com"]
-  s.homepage    = "http://github.com/spacialdb/gcm"
+  s.homepage    = "https://github.com/spacialdb/gcm"
   s.summary     = %q{send data to Android applications on Android devices}
   s.description = %q{gcm is a service that helps developers send data from servers to their Android applications on Android devices.}
   s.license     = "MIT"
