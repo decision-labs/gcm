@@ -70,7 +70,7 @@ class GCM
       body = JSON.parse(body)
       if body['canonical_ids'] > 0
         body['results'].each_with_index do |result, index|
-          canonical_ids << {:old => registration_ids[index], :new=> result['registration_id']} if has_canonical_id?(result)
+          canonical_ids << { :old => registration_ids[index], :new => result['registration_id'] } if has_canonical_id?(result)
         end
       end
     end
