@@ -11,11 +11,11 @@ GCM sends notifications to Android devices via [GCM](http://developer.android.co
 
 An Android device running 2.0 or newer and an API key as per [GCM getting started guide](http://developer.android.com/guide/google/gcm/gs.html).
 
-One of the following, tested ruby version:
+One of the following, tested Ruby versions:
 
-* `1.8.7`
-* `1.9.x`
+* `1.9.3`
 * `2.0.0`
+* `2.1.0`
 
 ##Usage
 
@@ -35,6 +35,18 @@ Currently `response` is just a hash containing the response `body`, `headers` an
 If the above code is stored in a file like `trigger_gcm.rb`, thats how you can call it.
 
 	$ ruby -rubygems trigger_gcm.rb
+
+## Blog posts
+
+* [How to send iOS and Android notifications from your Rails backend](http://blog.wellwith.me/how-to-send-ios-and-android-notifications-from-your-rails-backend)
+
+## ChangeLog
+
+### Version 0.0.5
+
+* Added support for canonical registration ID
+* Only support Ruby versions [>= 1.9.3](https://www.ruby-lang.org/en/news/2014/01/10/ruby-1-9-3-will-end-on-2015/)
+* Fixed Rspec deprecation warnings for Rspec 3.0.0.beta
 
 ##MIT License
 
