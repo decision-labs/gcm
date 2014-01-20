@@ -47,6 +47,10 @@ If the above code is stored in a file like `trigger_gcm.rb`, thats how you can c
 
 ## ChangeLog
 
+### HEAD
+
+* You can initialize GCM class with [HTTParty Options](https://github.com/jnunemaker/httparty/blob/master/lib/httparty.rb#L40-L68)
+
 ### Version 0.0.5
 
 * Added support for canonical registration ID
