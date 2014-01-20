@@ -25,6 +25,11 @@ Sending notifications:
 require 'gcm'
 
 gcm = GCM.new(api_key)
+# you can set option parameters in here
+#  - all options are pass to HTTParty method arguments
+#  - ref: https://github.com/jnunemaker/httparty/blob/master/lib/httparty.rb#L40-L68
+#  gcm = GCM.new(api_key, timeout: 3)
+
 registration_ids= ["12", "13"] # an array of one or more client registration IDs
 options = {data: {score: "123"}, collapse_key: "updated_score"}
 response = gcm.send_notification(registration_ids, options)

@@ -11,8 +11,9 @@ class GCM
 
   attr_accessor :timeout, :api_key
 
-  def initialize(api_key)
+  def initialize(api_key, client_options = {})
     @api_key = api_key
+    @client_options = client_options
   end
 
   # {
@@ -37,8 +38,7 @@ class GCM
         'Content-Type' => 'application/json',
       }
     }
-
-    response = self.class.post('', params)
+    response = self.class.post('', params.merge(@client_options))
     build_response(response, registration_ids)
   end
 
