@@ -22,7 +22,7 @@ describe GCM do
       }
     end
 
-    before(:each) do
+    let(:stub_gcm_request) do
       stub_request(:post, GCM::PUSH_URL).with(
         :body => valid_request_body.to_json,
         :headers => valid_request_headers
@@ -34,9 +34,28 @@ describe GCM do
       )
     end
 
+    let(:stub_gcm_request_with_basic_auth) do
+      uri = URI.parse(GCM::PUSH_URL)
+      uri.user = 'a'
+      uri.password = 'b'
+      stub_request(:post, uri.to_s).to_return(:body => {}, :headers => {}, :status => 200)
+    end
+
+    before(:each) do
+      stub_gcm_request
+      stub_gcm_request_with_basic_auth
+    end
+
     it "should send notification using POST to GCM server" do
       gcm = GCM.new(api_key)
       gcm.send_notification(registration_ids).should eq({:response => 'success', :body => {}, :headers => {}, :status_code => 200, :canonical_ids => []})
+      stub_gcm_request.should have_been_made.times(1)
+    end
+
+    it "should use basic authentication provided by options" do
+      gcm = GCM.new(api_key, basic_auth: {username: 'a', password: 'b'})
+      gcm.send_notification(registration_ids).should eq({:response => 'success', :body => {}, :headers => {}, :status_code => 200, :canonical_ids => []})
+      stub_gcm_request_with_basic_auth.should have_been_made.times(1)
     end
 
     context "send notification with data" do
