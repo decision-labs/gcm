@@ -176,7 +176,7 @@ describe GCM do
 
       let(:valid_response_body_with_canonical_ids) do
         {
-            :canonical_ids => 1, :results => [{:registration_id => "43", :message_id => "0:1385025861956342%572c22801bb3" }]
+          :canonical_ids => 1, :results => [{:registration_id => "43", :message_id => "0:1385025861956342%572c22801bb3" }]
         }
       end
 
@@ -187,23 +187,23 @@ describe GCM do
         stub_request(:post, GCM::PUSH_URL).with(
             mock_request_attributes
         ).to_return(
-            # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
-            :body => valid_response_body_with_canonical_ids.to_json,
-            :headers => {},
-            :status => 200
+          # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
+          :body => valid_response_body_with_canonical_ids.to_json,
+          :headers => {},
+          :status => 200
         )
       end
 
       it "should contain canonical_ids" do
         response = subject.send_notification(registration_ids)
 
-        response.should  eq({
-                                                                  :headers => {},
-                                                                  :canonical_ids => [{:old => "42", :new => "43"}],
-                                                                  :status_code => 200,
-                                                                  :response => 'success',
-                                                                  :body => "{\"canonical_ids\":1,\"results\":[{\"registration_id\":\"43\",\"message_id\":\"0:1385025861956342%572c22801bb3\"}]}"
-                                                                })
+        response.should eq({
+          :headers => {},
+          :canonical_ids => [{:old => "42", :new => "43"}],
+          :status_code => 200,
+          :response => 'success',
+          :body => "{\"canonical_ids\":1,\"results\":[{\"registration_id\":\"43\",\"message_id\":\"0:1385025861956342%572c22801bb3\"}]}"
+        })
       end
     end
   end
