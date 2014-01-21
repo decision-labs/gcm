@@ -15,7 +15,7 @@ gem 'gcm'
 
 ##Requirements
 
-An Android device running 2.0 or newer and an API key as per [GCM getting started guide](http://developer.android.com/google/gcm).
+An Android device running 2.2 or newer and an API key as per [GCM getting started guide](http://developer.android.com/google/gcm/gs.html).
 
 One of the following, tested Ruby versions:
 
@@ -55,7 +55,7 @@ Currently `response` is just a hash containing the response `body`, `headers` an
 
 * You can initialize GCM class with [HTTParty Options](https://github.com/jnunemaker/httparty/blob/master/lib/httparty.rb#L40-L68)
 
-### Version 0.0.5
+### 0.0.5
 
 * Added support for [canonical registration ID](http://developer.android.com/google/gcm/adv.html#canonical)
 * Only support Ruby versions [>= 1.9.3](https://www.ruby-lang.org/en/news/2014/01/10/ruby-1-9-3-will-end-on-2015/)
