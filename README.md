@@ -51,6 +51,9 @@ Currently `response` is just a hash containing the response `body`, `headers` an
 
 ## ChangeLog
 
+## 0.0.7
+* All responses now have a body and header hashes
+
 ### 0.0.6
 
 * You can initialize GCM class with [HTTParty Options](https://github.com/jnunemaker/httparty/blob/master/lib/httparty.rb#L40-L68)
