@@ -61,6 +61,9 @@ class GCM
         { :response => 'There was an internal error in the GCM server while trying to process the request.', :status_code => response.code }
       when 503
         { :response => 'Server is temporarily unavailable.', :status_code => response.code }
+      else
+        body = response.body || {}
+        { :response => '', :body => body, :headers => response.headers, :status_code => response.code }
     end
   end
 

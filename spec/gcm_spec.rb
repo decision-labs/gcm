@@ -163,6 +163,28 @@ describe GCM do
           })
         end
       end
+
+      context "on unhandled failure code" do
+        before do
+          stub_request(:post, GCM::PUSH_URL).with(
+            mock_request_attributes
+          ).to_return(
+            # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
+            :body => { "body-key" => "Body value" },
+            :headers => { "header-key" => "Header value" },
+            :status => 599
+          )
+        end
+
+        it "should not send notification due to 599" do
+          subject.send_notification(registration_ids).should eq({
+            :response => '',
+            :body => { "body-key" => "Body value" },
+            :headers => { "header-key" => ["Header value"] },
+            :status_code => 599
+          })
+        end
+      end
     end
 
     context " when send_notification responds canonical_ids" do
