@@ -49,20 +49,22 @@ class GCM
   end
 
   def build_response(response, registration_ids)
+    body = response.body || {}
+    response_hash = {:body => body, :headers => response.headers, :status_code => response.code}
     case response.code
       when 200
-        body = response.body || {}
-        { :response => 'success', :body => body, :headers => response.headers, :status_code => response.code, :canonical_ids => build_canonical_ids(body, registration_ids) }
+        response_hash[:response] = 'success'
+        response_hash[:canonical_ids] = build_canonical_ids(body, registration_ids)
       when 400
-        { :response => 'Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.', :status_code => response.code }
+        response_hash[:response] = 'Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.'
       when 401
-        { :response => 'There was an error authenticating the sender account.', :status_code => response.code }
+        response_hash[:response] = 'There was an error authenticating the sender account.'
       when 503
-        { :response => 'Server is temporarily unavailable.', :status_code => response.code }
+        response_hash[:response] = 'Server is temporarily unavailable.'
       when 500..599
-        body = response.body || {}
-        { :response => 'There wa an internal error in the GCM server while trying to process the request.', :body => body, :headers => response.headers, :status_code => response.code }
+        response_hash[:response] = 'There was an internal error in the GCM server while trying to process the request.'
     end
+    response_hash
   end
 
   def build_canonical_ids(body, registration_ids)

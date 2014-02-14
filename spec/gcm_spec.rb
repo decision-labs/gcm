@@ -98,6 +98,8 @@ describe GCM do
         end
         it "should not send notification due to 400" do
           subject.send_notification(registration_ids).should eq({
+            :body => {},
+            :headers => {},
             :response => "Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.",
             :status_code => 400
           })
@@ -118,6 +120,8 @@ describe GCM do
 
         it "should not send notification due to 401" do
           subject.send_notification(registration_ids).should eq({
+            :body => {},
+            :headers => {},
             :response => "There was an error authenticating the sender account.",
             :status_code => 401
           })
@@ -138,13 +142,15 @@ describe GCM do
 
         it "should not send notification due to 503" do
           subject.send_notification(registration_ids).should eq({
+            :body => {},
+            :headers => {},
             :response => 'Server is temporarily unavailable.',
             :status_code => 503
           })
         end
       end
 
-      context "on unhandled failure code" do
+      context "on failure code 5xx" do
         before do
           stub_request(:post, GCM::PUSH_URL).with(
             mock_request_attributes
@@ -158,9 +164,9 @@ describe GCM do
 
         it "should not send notification due to 599" do
           subject.send_notification(registration_ids).should eq({
-            :response => 'There wa an internal error in the GCM server while trying to process the request.',
             :body => { "body-key" => "Body value" },
             :headers => { "header-key" => ["Header value"] },
+            :response => 'There was an internal error in the GCM server while trying to process the request.',
             :status_code => 599
           })
         end
