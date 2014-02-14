@@ -74,7 +74,7 @@ describe GCM do
       end
     end
 
-    context " when send_notification responds with failure" do
+    context "when send_notification responds with failure" do
 
       let(:mock_request_attributes) do
         {
@@ -98,6 +98,8 @@ describe GCM do
         end
         it "should not send notification due to 400" do
           subject.send_notification(registration_ids).should eq({
+            :body => {},
+            :headers => {},
             :response => "Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.",
             :status_code => 400
           })
@@ -118,28 +120,10 @@ describe GCM do
 
         it "should not send notification due to 401" do
           subject.send_notification(registration_ids).should eq({
-            :response => "There was an error authenticating the sender account.",
-            :status_code => 401
-          })
-        end
-      end
-
-      context "on failure code 500" do
-        before do
-          stub_request(:post, GCM::PUSH_URL).with(
-            mock_request_attributes
-          ).to_return(
-            # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
             :body => {},
             :headers => {},
-            :status => 500
-          )
-        end
-
-        it "should not send notification due to 500" do
-          subject.send_notification(registration_ids).should eq({
-            :response => 'There was an internal error in the GCM server while trying to process the request.',
-            :status_code => 500
+            :response => "There was an error authenticating the sender account.",
+            :status_code => 401
           })
         end
       end
@@ -158,14 +142,38 @@ describe GCM do
 
         it "should not send notification due to 503" do
           subject.send_notification(registration_ids).should eq({
+            :body => {},
+            :headers => {},
             :response => 'Server is temporarily unavailable.',
             :status_code => 503
           })
         end
       end
+
+      context "on failure code 5xx" do
+        before do
+          stub_request(:post, GCM::PUSH_URL).with(
+            mock_request_attributes
+          ).to_return(
+            # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
+            :body => { "body-key" => "Body value" },
+            :headers => { "header-key" => "Header value" },
+            :status => 599
+          )
+        end
+
+        it "should not send notification due to 599" do
+          subject.send_notification(registration_ids).should eq({
+            :body => { "body-key" => "Body value" },
+            :headers => { "header-key" => ["Header value"] },
+            :response => 'There was an internal error in the GCM server while trying to process the request.',
+            :status_code => 599
+          })
+        end
+      end
     end
 
-    context " when send_notification responds canonical_ids" do
+    context "when send_notification responds canonical_ids" do
 
       let(:mock_request_attributes) do
         {
