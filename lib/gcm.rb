@@ -57,13 +57,11 @@ class GCM
         { :response => 'Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.', :status_code => response.code }
       when 401
         { :response => 'There was an error authenticating the sender account.', :status_code => response.code }
-      when 500
-        { :response => 'There was an internal error in the GCM server while trying to process the request.', :status_code => response.code }
       when 503
         { :response => 'Server is temporarily unavailable.', :status_code => response.code }
-      else
+      when 500..599
         body = response.body || {}
-        { :response => '', :body => body, :headers => response.headers, :status_code => response.code }
+        { :response => 'There wa an internal error in the GCM server while trying to process the request.', :body => body, :headers => response.headers, :status_code => response.code }
     end
   end
 
