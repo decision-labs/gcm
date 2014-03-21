@@ -51,6 +51,10 @@ Currently `response` is just a hash containing the response `body`, `headers` an
 * [Как отправлять push уведомления из Вашего Rails приложения](http://habrahabr.ru/post/214607/)
 * [GCM – 서버 만들기](http://susemi99.kr/1023)
 
+## Android Client
+
+You can find an Android Client app to recieve notifications from here: [Google Cloud Message - Client Android](https://github.com/mikebolivar/gcm)
+
 ## ChangeLog
 
 ## 0.0.7
