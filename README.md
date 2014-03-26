@@ -50,6 +50,7 @@ Currently `response` is just a hash containing the response `body`, `headers` an
 * [How to send iOS and Android notifications from your Rails backend](http://juretriglav.si/how-to-send-ios-and-android-notifications-from-your-rails-backend/)
 * [Как отправлять push уведомления из Вашего Rails приложения](http://habrahabr.ru/post/214607/)
 * [GCM – 서버 만들기](http://susemi99.kr/1023)
+* [ruby から gcm を使って android 端末へメッセージを送信する](http://qiita.com/ma2saka/items/5852308b7c2855eef552)
 
 ## Android Client
 
