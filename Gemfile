@@ -4,4 +4,4 @@ gemspec
 gem 'rake'
 gem 'rspec'
 gem 'webmock'
-gem 'ci_reporter'
+gem 'ci_reporter_rspec'
