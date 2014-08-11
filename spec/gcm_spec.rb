@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe GCM do
+  let(:send_url) { "#{GCM::base_uri}/send" }
+
   it "should raise an error if the api key is not provided" do
     expect {GCM.new}.to raise_error
   end
@@ -22,8 +24,8 @@ describe GCM do
       }
     end
 
-    let(:stub_gcm_request) do
-      stub_request(:post, GCM::PUSH_URL).with(
+    let(:stub_gcm_send_request) do
+      stub_request(:post, send_url).with(
         :body => valid_request_body.to_json,
         :headers => valid_request_headers
       ).to_return(
@@ -34,33 +36,33 @@ describe GCM do
       )
     end
 
-    let(:stub_gcm_request_with_basic_auth) do
-      uri = URI.parse(GCM::PUSH_URL)
+    let(:stub_gcm_send_request_with_basic_auth) do
+      uri = URI.parse(send_url)
       uri.user = 'a'
       uri.password = 'b'
       stub_request(:post, uri.to_s).to_return(:body => {}, :headers => {}, :status => 200)
     end
 
     before(:each) do
-      stub_gcm_request
-      stub_gcm_request_with_basic_auth
+      stub_gcm_send_request
+      stub_gcm_send_request_with_basic_auth
     end
 
     it "should send notification using POST to GCM server" do
       gcm = GCM.new(api_key)
       gcm.send(registration_ids).should eq({:response => 'success', :body => {}, :headers => {}, :status_code => 200, :canonical_ids => []})
-      stub_gcm_request.should have_been_made.times(1)
+      stub_gcm_send_request.should have_been_made.times(1)
     end
 
     it "should use basic authentication provided by options" do
       gcm = GCM.new(api_key, basic_auth: {username: 'a', password: 'b'})
       gcm.send(registration_ids).should eq({:response => 'success', :body => {}, :headers => {}, :status_code => 200, :canonical_ids => []})
-      stub_gcm_request_with_basic_auth.should have_been_made.times(1)
+      stub_gcm_send_request_with_basic_auth.should have_been_made.times(1)
     end
 
     context "send notification with data" do
       let!(:stub_with_data){
-        stub_request(:post, GCM::PUSH_URL).
+        stub_request(:post, send_url).
           with(:body => "{\"registration_ids\":[\"42\"],\"data\":{\"score\":\"5x1\",\"time\":\"15:10\"}}",
                :headers => valid_request_headers ).
           to_return(:status => 200, :body => "", :headers => {})
@@ -87,7 +89,7 @@ describe GCM do
 
       context "on failure code 400" do
         before do
-          stub_request(:post, GCM::PUSH_URL).with(
+          stub_request(:post, send_url).with(
             mock_request_attributes
           ).to_return(
             # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
@@ -108,7 +110,7 @@ describe GCM do
 
       context "on failure code 401" do
         before do
-          stub_request(:post, GCM::PUSH_URL).with(
+          stub_request(:post, send_url).with(
             mock_request_attributes
           ).to_return(
             # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
@@ -130,7 +132,7 @@ describe GCM do
 
       context "on failure code 503" do
         before do
-          stub_request(:post, GCM::PUSH_URL).with(
+          stub_request(:post, send_url).with(
             mock_request_attributes
           ).to_return(
             # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
@@ -152,7 +154,7 @@ describe GCM do
 
       context "on failure code 5xx" do
         before do
-          stub_request(:post, GCM::PUSH_URL).with(
+          stub_request(:post, send_url).with(
             mock_request_attributes
           ).to_return(
             # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
@@ -192,7 +194,7 @@ describe GCM do
 
 
       before do
-        stub_request(:post, GCM::PUSH_URL).with(
+        stub_request(:post, send_url).with(
             mock_request_attributes
         ).to_return(
           # ref: http://developer.android.com/guide/google/gcm/gcm.html#success

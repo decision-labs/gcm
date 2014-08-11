@@ -113,7 +113,7 @@ class GCM
     case response.code
       when 200
         response_hash[:response] = 'success'
-        response_hash[:canonical_ids] = build_canonical_ids(body, registration_ids) unless registration_ids.blank?
+        response_hash[:canonical_ids] = build_canonical_ids(body, registration_ids) unless registration_ids.empty?
       when 400
         response_hash[:response] = 'Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.'
       when 401
