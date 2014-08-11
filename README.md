@@ -21,11 +21,11 @@ One of the following, tested Ruby versions:
 
 * `1.9.3`
 * `2.0.0`
-* `2.1.0`
+* `2.1.2`
 
 ##Usage
 
-For your server to send a message to one or more devices, you must first initialize a new `GCM` class with your api key, and then call the `send_notification` method on this and give it 1 or more (up to 1000) registration IDs as an array of strings. You can also optionally send further [HTTP message parameters](http://developer.android.com/google/gcm/server.html#params) like `data` or `time_to_live` etc. as a hash via the second optional argument to `send_notification`.
+For your server to send a message to one or more devices, you must first initialise a new `GCM` class with your [api key](https://developer.android.com/google/gcm/gs.html#access-key), and then call the `send` method on this and give it 1 or more (up to 1000) registration IDs as an array of strings. You can also optionally send further [HTTP message parameters](http://developer.android.com/google/gcm/server.html#params) like `data` or `time_to_live` etc. as a hash via the second optional argument to `send_notification`.
 
 Example sending notifications:
 
@@ -45,6 +45,38 @@ response = gcm.send_notification(registration_ids, options)
 
 Currently `response` is just a hash containing the response `body`, `headers` and `status`. Check [here](http://developer.android.com/google/gcm/http.html#response) to see how to interpret the responses.
 
+## User Notifications
+
+With user notifications, 3rd-party app servers can send a single message to multiple instance of an app running on devices owned by a single user. To use this feature, you will first need an initialised `GCM` class.
+
+### Generate a Notification Key
+Then you will need a notification key which you can create for a particular `key_name` which needs to  be uniquely named per app in case you have multiple apps for the same `project_id`.  This ensures that notifications only go to the intended target app. The `create` method will do this and return the token `notification_key` in the response:
+
+```ruby
+response = gcm.create("appUser-Chris", "my_project_id",
+                      registration_ids:["4", "8", "15", "16", "23", "42"])
+```
+
+### Send to Notification Key
+Now you can send a message to a particular `notification_key` via the `send` method. This allows the server to send a single message to multiple app instances  (typically on multiple devices) owned by a single user (instead of registration IDs). Note: the maximum number of members allowed for a notification_key is 10.
+
+```ruby
+response = gcm.send([], {notification_key: "appUser-Chris-key", data: {score: "3x1"}, collapse_key: "updated_score"})
+```
+
+### Add/Remove Registration IDs
+
+You can also add/remove registration IDs to/from a particular `notification_key` of some `project_id`. For example:
+
+```ruby
+response = gcm.add("appUser-Chris", "my_project_id", notification_key:"appUser-Chris-key"
+                   registration_ids:["7", "3"])
+
+response = gcm.remove("appUser-Chris", "my_project_id", notification_key:"appUser-Chris-key"
+                   registration_ids:["8", "15"])
+```
+
+
 ## Blog posts
 
 * [How to send iOS and Android notifications from your Rails backend](http://juretriglav.si/how-to-send-ios-and-android-notifications-from-your-rails-backend/)
@@ -54,9 +86,13 @@ Currently `response` is just a hash containing the response `body`, `headers` an
 
 ## Android Client
 
-You can find an Android Client app to recieve notifications from here: [Google Cloud Message - Client Android](https://github.com/mikebolivar/gcm)
+You can find an Android Client app to receive notifications from here: [Google Cloud Message - Client Android](https://github.com/mikebolivar/gcm)
 
 ## ChangeLog
+
+## 0.0.8
+* Added support for User Notifications API
+* 
 
 ## 0.0.7
 * All responses now have a body and header hashes
