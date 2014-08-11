@@ -47,7 +47,7 @@ Currently `response` is just a hash containing the response `body`, `headers` an
 
 ## User Notifications
 
-With user notifications, you can send a single message to multiple instance of an app running on devices owned by a single user. To use this feature, you will first need an initialised `GCM` class.
+With [user notifications](http://developer.android.com/google/gcm/notifications.html), you can send a single message to multiple instance of an app running on devices owned by a single user. To use this feature, you will first need an initialised `GCM` class.
 
 ### Generate a Notification Key
 Then you will need a notification key which you can create for a particular `key_name` which needs to be uniquely named per app in case you have multiple apps for the same `project_id`.  This ensures that notifications only go to the intended target app. The `create` method will do this and return the token `notification_key` in the response:
