@@ -4,8 +4,7 @@ require 'json'
 
 class GCM
   include HTTParty
-  PUSH_URL = 'https://android.googleapis.com/gcm/send'
-  base_uri PUSH_URL
+  base_uri 'https://android.googleapis.com/gcm'
   default_timeout 30
   format :json
 
@@ -26,8 +25,8 @@ class GCM
   #     "time": "15:10"
   #   }
   # }
-  # gcm = GCM.new(api_key)
-  # gcm.send_notification({registration_ids: ["4sdsx", "8sdsd"], data: {score: "5x1"}})
+  # gcm = GCM.new("API_KEY")
+  # gcm.send(registration_ids: ["4sdsx", "8sdsd"], {data: {score: "5x1"}})
   def send_notification(registration_ids, options = {})
     post_body = build_post_body(registration_ids, options)
 
@@ -38,9 +37,69 @@ class GCM
         'Content-Type' => 'application/json',
       }
     }
-    response = self.class.post('', params.merge(@client_options))
+    response = self.class.post('/send', params.merge(@client_options))
     build_response(response, registration_ids)
   end
+  alias_method :send, :send_notification
+
+  def create_notification_key(key_name, project_id, registration_ids=[])
+    post_body = build_post_body(registration_ids, {
+                  :operation => "create",
+                  :notification_key_name => key_name})
+
+    params = {
+      :body => post_body.to_json,
+      :headers => {
+        'Content-Type' => 'application/json',
+        'project_id' => project_id,
+        'Authorization' => "key=#{@api_key}"
+      }
+    }
+
+    response = self.class.post('/notification', params.merge(@client_options))
+    build_response(response)
+  end
+  alias_method :create, :create_notification_key
+
+  def add_registration_ids(key_name, project_id, notification_key, registration_ids)
+    post_body = build_post_body(registration_ids, {
+                    :operation => "add",
+                    :notification_key_name => key_name,
+                    :notification_key => notification_key})
+
+    params = {
+      :body => post_body.to_json,
+      :headers => {
+        'Content-Type' => 'application/json',
+        'project_id' => project_id,
+        'Authorization' => "key=#{@api_key}"
+      }
+    }
+
+    response = self.class.post('/notification', params.merge(@client_options))
+    build_response(response)
+  end
+  alias_method :add, :add_registration_ids
+
+  def remove_registration_ids(key_name, project_id, notification_key, registration_ids)
+    post_body = build_post_body(registration_ids, {
+                  :operation => "remove",
+                  :notification_key_name => key_name,
+                  :notification_key => notification_key})
+
+    params = {
+      :body => post_body.to_json,
+      :headers => {
+        'Content-Type' => 'application/json',
+        'project_id' => project_id,
+        'Authorization' => "key=#{@api_key}"
+      }
+    }
+
+    response = self.class.post('/notification', params.merge(@client_options))
+    build_response(response)
+  end
+  alias_method :remove, :remove_registration_ids
 
   private
 
@@ -48,13 +107,13 @@ class GCM
     { :registration_ids => registration_ids }.merge(options)
   end
 
-  def build_response(response, registration_ids)
+  def build_response(response, registration_ids=[])
     body = response.body || {}
     response_hash = {:body => body, :headers => response.headers, :status_code => response.code}
     case response.code
       when 200
         response_hash[:response] = 'success'
-        response_hash[:canonical_ids] = build_canonical_ids(body, registration_ids)
+        response_hash[:canonical_ids] = build_canonical_ids(body, registration_ids) unless registration_ids.empty?
       when 400
         response_hash[:response] = 'Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.'
       when 401
