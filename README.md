@@ -84,7 +84,7 @@ response = gcm.remove(key_name: "appUser-Chris",
                 registration_ids:["8", "15"])
 ```
 
-## Blog posts
+## Blog Posts
 
 * [How to send iOS and Android notifications from your Rails backend](http://juretriglav.si/how-to-send-ios-and-android-notifications-from-your-rails-backend/)
 * [Как отправлять push уведомления из Вашего Rails приложения](http://habrahabr.ru/post/214607/)
@@ -97,11 +97,11 @@ You can find an Android Client app to receive notifications from here: [Google C
 
 ## ChangeLog
 
-## 0.0.8
+### 0.0.8
 * Added support for User Notifications API
 * Added alias method `send` for `send_notification`
 
-## 0.0.7
+### 0.0.7
 * All responses now have a body and header hashes
 
 ### 0.0.6
