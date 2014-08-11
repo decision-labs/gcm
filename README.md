@@ -99,7 +99,7 @@ You can find an Android Client app to receive notifications from here: [Google C
 
 ## 0.0.8
 * Added support for User Notifications API
-*
+* Added alias method `send` for `send_notification`
 
 ## 0.0.7
 * All responses now have a body and header hashes

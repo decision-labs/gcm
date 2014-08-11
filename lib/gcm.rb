@@ -27,7 +27,7 @@ class GCM
   # }
   # gcm = GCM.new("API_KEY")
   # gcm.send(registration_ids: ["4sdsx", "8sdsd"], {data: {score: "5x1"}})
-  def send(registration_ids, options = {})
+  def send_notification(registration_ids, options = {})
     post_body = build_post_body(registration_ids, options)
 
     params = {
@@ -42,7 +42,7 @@ class GCM
   end
   alias_method :send, :send_notification
 
-  def create(key_name, project_id, registration_ids=[])
+  def create_notification_key(key_name, project_id, registration_ids=[])
     post_body = build_post_body(registration_ids, {
                   :operation => "create",
                   :notification_key_name => key_name})
@@ -81,7 +81,7 @@ class GCM
   end
   alias_method :add, :add_registration_ids
 
-  def remove(key_name, project_id, notification_key, registration_ids)
+  def remove_registration_ids(key_name, project_id, notification_key, registration_ids)
     post_body = build_post_body(registration_ids, {
                   :operation => "remove",
                   :notification_key_name => key_name,
