@@ -113,7 +113,9 @@ class GCM
     case response.code
       when 200
         response_hash[:response] = 'success'
+        body = JSON.parse(body) unless body.empty?
         response_hash[:canonical_ids] = build_canonical_ids(body, registration_ids) unless registration_ids.empty?
+        response_hash[:not_registered_ids] = build_not_registered_ids(body,registration_ids) unless registration_ids.empty?
       when 400
         response_hash[:response] = 'Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.'
       when 401
@@ -129,7 +131,6 @@ class GCM
   def build_canonical_ids(body, registration_ids)
     canonical_ids = []
     unless body.empty?
-      body = JSON.parse(body)
       if body['canonical_ids'] > 0
         body['results'].each_with_index do |result, index|
           canonical_ids << { :old => registration_ids[index], :new => result['registration_id'] } if has_canonical_id?(result)
@@ -139,7 +140,23 @@ class GCM
     canonical_ids
   end
 
+  def build_not_registered_ids(body, registration_id)
+    not_registered_ids = []
+    unless body.empty?
+      if body['failure'] > 0
+        body['results'].each_with_index do |result,index|
+          not_registered_ids << registration_id[index] if is_not_registered?(result)
+        end
+      end
+    end
+    not_registered_ids
+  end
+
   def has_canonical_id?(result)
     !result['registration_id'].nil?
+  end
+
+  def is_not_registered?(result)
+    result['error'] == 'NotRegistered'
   end
 end
