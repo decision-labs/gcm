@@ -21,7 +21,7 @@ One of the following, tested Ruby versions:
 
 * `1.9.3`
 * `2.0.0`
-* `2.1.2`
+* `2.1.3`
 
 ##Usage
 
@@ -98,7 +98,7 @@ You can find an Android Client app to receive notifications from here: [Google C
 ## ChangeLog
 
 ### 0.0.9
-* Check for NotRegistered error and return unregistered ids if this occurs
+* Check for [NotRegistered](http://developer.android.com/google/gcm/adv.html#unreg) error and return unregistered ids if this occurs
 
 ### 0.0.8
 * Added support for User Notifications API
