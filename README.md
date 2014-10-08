@@ -97,6 +97,9 @@ You can find an Android Client app to receive notifications from here: [Google C
 
 ## ChangeLog
 
+### 0.0.9
+* Check for NotRegistered error and return unregistered ids if this occurs
+
 ### 0.0.8
 * Added support for User Notifications API
 * Added alias method `send` for `send_notification`
@@ -105,11 +108,9 @@ You can find an Android Client app to receive notifications from here: [Google C
 * All responses now have a body and header hashes
 
 ### 0.0.6
-
 * You can initialise GCM class with [HTTParty Options](https://github.com/jnunemaker/httparty/blob/master/lib/httparty.rb#L41-L69)
 
 ### 0.0.5
-
 * Added support for [canonical registration ID](http://developer.android.com/google/gcm/adv.html#canonical)
 * Only support Ruby versions [>= 1.9.3](https://www.ruby-lang.org/en/news/2014/01/10/ruby-1-9-3-will-end-on-2015/)
 * Fixed Rspec deprecation warnings for Rspec 3.0.0.beta
