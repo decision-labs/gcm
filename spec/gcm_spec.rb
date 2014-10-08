@@ -50,13 +50,13 @@ describe GCM do
 
     it "should send notification using POST to GCM server" do
       gcm = GCM.new(api_key)
-      gcm.send(registration_ids).should eq({:response => 'success', :body => {}, :headers => {}, :status_code => 200, :canonical_ids => []})
+      gcm.send(registration_ids).should eq({:response => 'success', :body => {}, :headers => {}, :status_code => 200, :canonical_ids => [], :not_registered_ids => []})
       stub_gcm_send_request.should have_been_made.times(1)
     end
 
     it "should use basic authentication provided by options" do
       gcm = GCM.new(api_key, basic_auth: {username: 'a', password: 'b'})
-      gcm.send(registration_ids).should eq({:response => 'success', :body => {}, :headers => {}, :status_code => 200, :canonical_ids => []})
+      gcm.send(registration_ids).should eq({:response => 'success', :body => {}, :headers => {}, :status_code => 200, :canonical_ids => [],:not_registered_ids => []})
       stub_gcm_send_request_with_basic_auth.should have_been_made.times(1)
     end
 
@@ -186,7 +186,7 @@ describe GCM do
 
       let(:valid_response_body_with_canonical_ids) do
         {
-          :canonical_ids => 1, :results => [{:registration_id => "43", :message_id => "0:1385025861956342%572c22801bb3" }]
+          :failure => 0, :canonical_ids => 1, :results => [{:registration_id => "43", :message_id => "0:1385025861956342%572c22801bb3" }]
         }
       end
 
@@ -210,10 +210,51 @@ describe GCM do
         response.should eq({
           :headers => {},
           :canonical_ids => [{:old => "42", :new => "43"}],
+          :not_registered_ids => [],
           :status_code => 200,
           :response => 'success',
-          :body => "{\"canonical_ids\":1,\"results\":[{\"registration_id\":\"43\",\"message_id\":\"0:1385025861956342%572c22801bb3\"}]}"
+          :body => "{\"failure\":0,\"canonical_ids\":1,\"results\":[{\"registration_id\":\"43\",\"message_id\":\"0:1385025861956342%572c22801bb3\"}]}"
         })
+      end
+    end
+
+    context "when send_notification responds with NotRegistered" do
+
+      subject { GCM.new(api_key) }
+
+      let(:mock_request_attributes) do
+        {
+            :body => valid_request_body.to_json,
+            :headers => valid_request_headers
+        }
+      end
+
+      let(:valid_response_body_with_not_registered_ids) do
+        {
+          :canonical_ids => 0, :failure => 1, :results => [{ :error => "NotRegistered" }]
+        }
+      end
+
+      before do
+        stub_request(:post,send_url).with(
+          mock_request_attributes
+        ).to_return(
+          :body => valid_response_body_with_not_registered_ids.to_json,
+          :headers => {},
+          :status => 200
+        )
+      end
+
+      it "should contain not_registered_ids" do
+        response = subject.send(registration_ids)
+        response.should eq(
+          :headers => {},
+          :canonical_ids => [],
+          :not_registered_ids => registration_ids,
+          :status_code => 200,
+          :response => 'success',
+          :body => "{\"canonical_ids\":0,\"failure\":1,\"results\":[{\"error\":\"NotRegistered\"}]}"
+        )
       end
     end
   end
