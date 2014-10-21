@@ -90,10 +90,11 @@ response = gcm.remove(key_name: "appUser-Chris",
 * [Как отправлять push уведомления из Вашего Rails приложения](http://habrahabr.ru/post/214607/)
 * [GCM – 서버 만들기](http://susemi99.kr/1023)
 * [ruby から gcm を使って android 端末へメッセージを送信する](http://qiita.com/ma2saka/items/5852308b7c2855eef552)
+* [titanium alloy android push通知 by ruby](http://shoprev.hatenablog.com/entry/2014/08/30/202531)
 
 ## Android Client
 
-You can find an Android Client app to receive notifications from here: [Google Cloud Message - Client Android](https://github.com/mikebolivar/gcm)
+You can find a guide to implement an Android Client app to receive notifications here: [Implementing GCM Client](https://developer.android.com/google/gcm/client.html).
 
 ## ChangeLog
 
