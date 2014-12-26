@@ -30,7 +30,7 @@ describe GCM do
         :headers => valid_request_headers
       ).to_return(
         # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
-        :body => {},
+        :body => "{}",
         :headers => {},
         :status => 200
       )
@@ -40,7 +40,7 @@ describe GCM do
       uri = URI.parse(send_url)
       uri.user = 'a'
       uri.password = 'b'
-      stub_request(:post, uri.to_s).to_return(:body => {}, :headers => {}, :status => 200)
+      stub_request(:post, uri.to_s).to_return(:body => "{}", :headers => {}, :status => 200)
     end
 
     before(:each) do
@@ -50,13 +50,13 @@ describe GCM do
 
     it "should send notification using POST to GCM server" do
       gcm = GCM.new(api_key)
-      gcm.send(registration_ids).should eq({:response => 'success', :body => {}, :headers => {}, :status_code => 200, :canonical_ids => [], :not_registered_ids => []})
+      gcm.send(registration_ids).should eq({:response => 'success', :body => "{}", :headers => {}, :status_code => 200, :canonical_ids => [], :not_registered_ids => []})
       stub_gcm_send_request.should have_been_made.times(1)
     end
 
     it "should use basic authentication provided by options" do
       gcm = GCM.new(api_key, basic_auth: {username: 'a', password: 'b'})
-      gcm.send(registration_ids).should eq({:response => 'success', :body => {}, :headers => {}, :status_code => 200, :canonical_ids => [],:not_registered_ids => []})
+      gcm.send(registration_ids).should eq({:response => 'success', :body => "{}", :headers => {}, :status_code => 200, :canonical_ids => [],:not_registered_ids => []})
       stub_gcm_send_request_with_basic_auth.should have_been_made.times(1)
     end
 
@@ -93,14 +93,14 @@ describe GCM do
             mock_request_attributes
           ).to_return(
             # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
-            :body => {},
+            :body => "{}",
             :headers => {},
             :status => 400
           )
         end
         it "should not send notification due to 400" do
           subject.send(registration_ids).should eq({
-            :body => {},
+            :body => "{}",
             :headers => {},
             :response => "Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.",
             :status_code => 400
@@ -114,7 +114,7 @@ describe GCM do
             mock_request_attributes
           ).to_return(
             # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
-            :body => {},
+            :body => "{}",
             :headers => {},
             :status => 401
           )
@@ -122,7 +122,7 @@ describe GCM do
 
         it "should not send notification due to 401" do
           subject.send(registration_ids).should eq({
-            :body => {},
+            :body => "{}",
             :headers => {},
             :response => "There was an error authenticating the sender account.",
             :status_code => 401
@@ -136,7 +136,7 @@ describe GCM do
             mock_request_attributes
           ).to_return(
             # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
-            :body => {},
+            :body => "{}",
             :headers => {},
             :status => 503
           )
@@ -144,7 +144,7 @@ describe GCM do
 
         it "should not send notification due to 503" do
           subject.send(registration_ids).should eq({
-            :body => {},
+            :body => "{}",
             :headers => {},
             :response => 'Server is temporarily unavailable.',
             :status_code => 503
@@ -158,7 +158,7 @@ describe GCM do
             mock_request_attributes
           ).to_return(
             # ref: http://developer.android.com/guide/google/gcm/gcm.html#success
-            :body => { "body-key" => "Body value" },
+            :body => "{\"body-key\" => \"Body value\"}",
             :headers => { "header-key" => "Header value" },
             :status => 599
           )
@@ -166,7 +166,7 @@ describe GCM do
 
         it "should not send notification due to 599" do
           subject.send(registration_ids).should eq({
-            :body => { "body-key" => "Body value" },
+            :body => "{\"body-key\" => \"Body value\"}",
             :headers => { "header-key" => ["Header value"] },
             :response => 'There was an internal error in the GCM server while trying to process the request.',
             :status_code => 599

@@ -15,13 +15,14 @@ gem 'gcm'
 
 ##Requirements
 
-An Android device running 2.2 or newer and an API key as per [GCM getting started guide](http://developer.android.com/google/gcm/gs.html).
+An Android device running 2.3 or newer and an API key as per [GCM getting started guide](http://developer.android.com/google/gcm/gs.html).
 
 One of the following, tested Ruby versions:
 
 * `1.9.3`
 * `2.0.0`
-* `2.1.3`
+* `2.1.5`
+* `2.2.0`
 
 ##Usage
 
