@@ -119,7 +119,7 @@ You can find a guide to implement an Android Client app to receive notifications
 
 ##MIT License
 
-* Copyright (c) 2014 Kashif Rasul and Shoaib Burq. See LICENSE.txt for details.
+* Copyright (c) 2015 Kashif Rasul and Shoaib Burq. See LICENSE.txt for details.
 
 ##Many thanks to all the contributors
 
