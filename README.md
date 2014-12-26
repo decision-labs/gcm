@@ -76,12 +76,12 @@ You can also add/remove registration IDs to/from a particular `notification_key`
 ```ruby
 response = gcm.add(key_name: "appUser-Chris",
                 project_id: "my_project_id",
-                notification_key:"appUser-Chris-key"
+                notification_key:"appUser-Chris-key",
                 registration_ids:["7", "3"])
 
 response = gcm.remove(key_name: "appUser-Chris",
                 project_id: "my_project_id",
-                notification_key:"appUser-Chris-key"
+                notification_key:"appUser-Chris-key",
                 registration_ids:["8", "15"])
 ```
 
