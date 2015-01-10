@@ -124,3 +124,8 @@ You can find a guide to implement an Android Client app to receive notifications
 ##Many thanks to all the contributors
 
 * [Contributors](https://github.com/spacialdb/gcm/contributors)
+
+## Donations
+We accept tips through [Gratipay](https://gratipay.com/spacialdb/).
+
+[![Gratipay](https://img.shields.io/gratipay/spacialdb.svg)](https://www.gittip.com/spacialdb/)
