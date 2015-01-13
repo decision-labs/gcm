@@ -101,7 +101,7 @@ class GCM
   end
   alias_method :remove, :remove_registration_ids
 
-  def send_message_to_notification_key(notification_key, options)
+  def send_with_notification_key(notification_key, options)
     { :to => notification_key }.merge(options)
 
     params = {
