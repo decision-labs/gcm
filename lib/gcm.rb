@@ -101,6 +101,20 @@ class GCM
   end
   alias_method :remove, :remove_registration_ids
 
+  def send_message_to_notification_key(notification_key, options)
+    { :to => notification_key }.merge(options)
+
+    params = {
+      :body => options.to_json,
+      :headers => {
+        'Authorization' => "key=#{@api_key}",
+        'Content-Type' => 'application/json',
+      }
+    }
+    response = self.class.post('/send', params.merge(@client_options))
+    build_response(response)
+  end
+
   private
 
   def build_post_body(registration_ids, options={})
