@@ -102,10 +102,10 @@ class GCM
   alias_method :remove, :remove_registration_ids
 
   def send_with_notification_key(notification_key, options)
-    { :to => notification_key }.merge(options)
+    body = { :to => notification_key }.merge(options)
 
     params = {
-      :body => options.to_json,
+      :body => body.to_json,
       :headers => {
         'Authorization' => "key=#{@api_key}",
         'Content-Type' => 'application/json',
