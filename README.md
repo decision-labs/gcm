@@ -63,8 +63,7 @@ response = gcm.create(key_name: "appUser-Chris",
 Now you can send a message to a particular `notification_key` via the `send` method. This allows the server to send a single data to multiple app instances  (typically on multiple devices) owned by a single user (instead of sending to registration IDs). Note: the maximum number of members allowed for a `notification_key` is 10.
 
 ```ruby
-response = gcm.send([], {
-            notification_key: "appUser-Chris-key",
+response = gcm.send_with_notification_key("notification_key", {
             data: {score: "3x1"},
             collapse_key: "updated_score"})
 ```
