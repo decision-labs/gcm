@@ -98,6 +98,9 @@ You can find a guide to implement an Android Client app to receive notifications
 
 ## ChangeLog
 
+### 0.1.0
+* Added `send_with_notification_key` to send message to a notification key since the documented API for it is [wrong]( http://stackoverflow.com/questions/19720767/gcm-user-notifications-missing-registration-ids-field/25183892#25183892).
+
 ### 0.0.9
 * Check for [NotRegistered](http://developer.android.com/google/gcm/adv.html#unreg) error and return unregistered ids if this occurs
 
