@@ -26,7 +26,7 @@ One of the following, tested Ruby versions:
 
 ##Usage
 
-For your server to send a message to one or more devices, you must first initialise a new `GCM` class with your [api key](https://developer.android.com/google/gcm/gs.html#access-key), and then call the `send` method on this and give it 1 or more (up to 1000) registration IDs as an array of strings. You can also optionally send further [HTTP message parameters](http://developer.android.com/google/gcm/server.html#params) like `data` or `time_to_live` etc. as a hash via the second optional argument to `send`.
+For your server to send a message to one or more devices, you must first initialize a new `GCM` class with your [api key](https://developer.android.com/google/gcm/gs.html#access-key), and then call the `send` method on this and give it 1 or more (up to 1000) registration IDs as an array of strings. You can also optionally send further [HTTP message parameters](http://developer.android.com/google/gcm/server.html#params) like `data` or `time_to_live` etc. as a hash via the second optional argument to `send`.
 
 Example sending notifications:
 
@@ -48,7 +48,7 @@ Currently `response` is just a hash containing the response `body`, `headers` an
 
 ## User Notifications
 
-With [user notifications](http://developer.android.com/google/gcm/notifications.html), you can send a single message to multiple instance of an app running on devices owned by a single user. To use this feature, you will first need an initialised `GCM` class.
+With [user notifications](http://developer.android.com/google/gcm/notifications.html), you can send a single message to multiple instance of an app running on devices owned by a single user. To use this feature, you will first need an initialized `GCM` class.
 
 ### Generate a Notification Key
 Then you will need a notification key which you can create for a particular `key_name` which needs to be uniquely named per app in case you have multiple apps for the same `project_id`.  This ensures that notifications only go to the intended target app. The `create` method will do this and return the token `notification_key` in the response:
@@ -112,7 +112,7 @@ You can find a guide to implement an Android Client app to receive notifications
 * All responses now have a body and header hashes
 
 ### 0.0.6
-* You can initialise GCM class with [HTTParty Options](https://github.com/jnunemaker/httparty/blob/master/lib/httparty.rb#L41-L69)
+* You can initialize GCM class with [HTTParty Options](https://github.com/jnunemaker/httparty/blob/master/lib/httparty.rb#L41-L69)
 
 ### 0.0.5
 * Added support for [canonical registration ID](http://developer.android.com/google/gcm/adv.html#canonical)
