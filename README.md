@@ -91,6 +91,7 @@ response = gcm.remove(key_name: "appUser-Chris",
 * [GCM – 서버 만들기](http://susemi99.kr/1023)
 * [ruby から gcm を使って android 端末へメッセージを送信する](http://qiita.com/ma2saka/items/5852308b7c2855eef552)
 * [titanium alloy android push通知 by ruby](http://shoprev.hatenablog.com/entry/2014/08/30/202531)
+* [Android Push Notifications via Rails](http://azukiweb.com/blog/2015/android-push-nots/)
 
 ## Android Client
 
