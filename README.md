@@ -21,8 +21,8 @@ One of the following, tested Ruby versions:
 
 * `1.9.3`
 * `2.0.0`
-* `2.1.5`
-* `2.2.0`
+* `2.1.7`
+* `2.2.3`
 
 ##Usage
 
