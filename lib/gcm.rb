@@ -27,8 +27,9 @@ class GCM
   # }
   # gcm = GCM.new("API_KEY")
   # gcm.send(registration_ids: ["4sdsx", "8sdsd"], {data: {score: "5x1"}})
-  def send_notification(registration_ids, options = {})
-    post_body = build_post_body(registration_ids, options)
+  # gcm.send(registration_ids: ["4sdsx", "8sdsd"], {data: {score: "5x1"}}, 'topics')
+  def send_notification(registration_ids, options = {}, to='registration_ids')
+    post_body = build_post_body(registration_ids, options, to)
 
     params = {
       :body => post_body.to_json,
@@ -117,8 +118,13 @@ class GCM
 
   private
 
-  def build_post_body(registration_ids, options={})
-    { :registration_ids => registration_ids }.merge(options)
+  def build_post_body(registration_ids, options={}, to)
+    case to
+    when 'topics'
+      { :to => registration_ids }.merge(options)
+    else
+      { :registration_ids => registration_ids }.merge(options)
+    end
   end
 
   def build_response(response, registration_ids=[])
@@ -128,8 +134,8 @@ class GCM
       when 200
         response_hash[:response] = 'success'
         body = JSON.parse(body) unless body.empty?
-        response_hash[:canonical_ids] = build_canonical_ids(body, registration_ids) unless registration_ids.empty?
-        response_hash[:not_registered_ids] = build_not_registered_ids(body,registration_ids) unless registration_ids.empty?
+        response_hash[:canonical_ids] = build_canonical_ids(body, registration_ids) if registration_ids.kind_of?(Array) && !registration_ids.empty?
+        response_hash[:not_registered_ids] = build_not_registered_ids(body,registration_ids) if registration_ids.kind_of?(Array) && !registration_ids.empty?
       when 400
         response_hash[:response] = 'Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.'
       when 401
