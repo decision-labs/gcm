@@ -134,8 +134,8 @@ class GCM
       when 200
         response_hash[:response] = 'success'
         body = JSON.parse(body) unless body.empty?
-        response_hash[:canonical_ids] = build_canonical_ids(body, registration_ids) unless registration_ids.empty?
-        response_hash[:not_registered_ids] = build_not_registered_ids(body,registration_ids) unless registration_ids.empty?
+        response_hash[:canonical_ids] = build_canonical_ids(body, registration_ids) if is_array(registration_ids) && !registration_ids.empty?
+        response_hash[:not_registered_ids] = build_not_registered_ids(body,registration_ids) if is_array(registration_ids) && !registration_ids.empty?
       when 400
         response_hash[:response] = 'Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.'
       when 401
