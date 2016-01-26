@@ -46,6 +46,23 @@ response = gcm.send(registration_ids, options)
 
 Currently `response` is just a hash containing the response `body`, `headers` and `status`. Check [here](http://developer.android.com/google/gcm/http.html#response) to see how to interpret the responses.
 
+
+### Sending to a topic
+
+```
+gcm = GCM.new("my_api_key")
+options = {data: {title: "Title", message:"Message"}}    
+gcm.send_topic("TOPIC_NAME", options)
+```
+Where TOPIC_NAME doesn't have to be started with: `/topics`.
+For instance, if you want to send a message to a topic named: `all_users` you simple call:
+```
+gcm.send_topic("all_users", options)
+```
+The call will send a message to: `/topics/all_users`
+
+
+
 ## User Notifications
 
 With [user notifications](http://developer.android.com/google/gcm/notifications.html), you can send a single message to multiple instance of an app running on devices owned by a single user. To use this feature, you will first need an initialised `GCM` class.

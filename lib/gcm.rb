@@ -42,6 +42,27 @@ class GCM
   end
   alias_method :send, :send_notification
 
+  # 
+  # gcm = GCM.new("API_KEY")
+  # options = {data: {title: "Message to a topic", message:"This is a message to a topic"}}    
+  # gcm.send_topic("geral", options)
+  # 
+  def send_topic(topic = "", options = {})
+    post_body = build_post_body_topic(topic, options)
+
+    params = {
+      :body => post_body.to_json,
+      :headers => {
+        'Authorization' => "key=#{@api_key}",
+        'Content-Type' => 'application/json',
+      }
+    }
+
+    response = self.class.post('/send', params.merge(@client_options))
+    build_response_topic(response)
+  end
+
+
   def create_notification_key(key_name, project_id, registration_ids=[])
     post_body = build_post_body(registration_ids, {
                   :operation => "create",
@@ -121,6 +142,12 @@ class GCM
     { :registration_ids => registration_ids }.merge(options)
   end
 
+  # 
+  # 
+  def build_post_body_topic(topic, options={})
+    { :to => "/topics/#{topic}" }.merge(options)
+  end
+
   def build_response(response, registration_ids=[])
     body = response.body || {}
     response_hash = {:body => body, :headers => response.headers, :status_code => response.code}
@@ -141,6 +168,28 @@ class GCM
     end
     response_hash
   end
+
+  # 
+  # 
+  def build_response_topic(response)
+    body = response.body || {}
+    response_hash = {:body => body, :headers => response.headers, :status_code => response.code}
+    case response.code
+      when 200
+        response_hash[:response] = 'success'
+        body = JSON.parse(body) unless body.empty?
+      when 400
+        response_hash[:response] = 'Only applies for JSON requests. Indicates that the request could not be parsed as JSON, or it contained invalid fields.'
+      when 401
+        response_hash[:response] = 'There was an error authenticating the sender account.'
+      when 503
+        response_hash[:response] = 'Server is temporarily unavailable.'
+      when 500..599
+        response_hash[:response] = 'There was an internal error in the GCM server while trying to process the request.'
+    end
+    response_hash
+  end
+
 
   def build_canonical_ids(body, registration_ids)
     canonical_ids = []
