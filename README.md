@@ -110,9 +110,11 @@ response = gcm.send_to_topic("yourTopic", {
 * [titanium alloy android push通知 by ruby](http://shoprev.hatenablog.com/entry/2014/08/30/202531)
 * [Android Push Notifications via Rails](http://azukiweb.com/blog/2015/android-push-nots/)
 
-## Android Client
+## Mobile Clients
 
-You can find a guide to implement an Android Client app to receive notifications here: [Implementing GCM Client](https://developer.android.com/google/gcm/client.html).
+You can find a guide to implement an Android Client app to receive notifications here: [Set up a GCM Client App on Android](https://developers.google.com/cloud-messaging/android/client).
+
+The guide to set up an iOS app to get notifications is here: [Setting up a GCM Client App on iOS](https://developers.google.com/cloud-messaging/ios/client).
 
 ## ChangeLog
 
@@ -143,7 +145,7 @@ You can find a guide to implement an Android Client app to receive notifications
 
 ##MIT License
 
-* Copyright (c) 2015 Kashif Rasul and Shoaib Burq. See LICENSE.txt for details.
+* Copyright (c) 2016 Kashif Rasul and Shoaib Burq. See LICENSE.txt for details.
 
 ##Many thanks to all the contributors
 
