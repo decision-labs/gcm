@@ -19,10 +19,10 @@ An Android device running 2.3 (or newer) or an iOS device and an API key as per 
 
 One of the following, tested Ruby versions:
 
-* `1.9.3`
 * `2.0.0`
-* `2.1.7`
-* `2.2.3`
+* `2.1.8`
+* `2.2.4`
+* `2.3.0`
 
 ##Usage
 
@@ -83,7 +83,6 @@ response = gcm.remove(key_name: "appUser-Chris",
                 notification_key:"appUser-Chris-key",
                 registration_ids:["8", "15"])
 ```
-
 
 ## Send Messages to Topics
 
