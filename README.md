@@ -116,6 +116,10 @@ You can find a guide to implement an Android Client app to receive notifications
 
 ## ChangeLog
 
+### 0.1.1
+
+* Added helper `send_to_topic` to send messages to [topics](https://developers.google.com/cloud-messaging/topic-messaging).
+
 ### 0.1.0
 * Added `send_with_notification_key` to send message to a notification key since the documented API for it is [wrong]( http://stackoverflow.com/questions/19720767/gcm-user-notifications-missing-registration-ids-field/25183892#25183892).
 
