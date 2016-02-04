@@ -36,7 +36,7 @@ require 'gcm'
 gcm = GCM.new("my_api_key")
 # you can set option parameters in here
 #  - all options are pass to HTTParty method arguments
-#  - ref: https://github.com/jnunemaker/httparty/blob/master/lib/httparty.rb#L40-L68
+#  - ref: https://github.com/jnunemaker/httparty/blob/master/lib/httparty.rb#L29-L60
 #  gcm = GCM.new("my_api_key", timeout: 3)
 
 registration_ids= ["12", "13"] # an array of one or more client registration tokens
@@ -44,18 +44,18 @@ options = {data: {score: "123"}, collapse_key: "updated_score"}
 response = gcm.send(registration_ids, options)
 ```
 
-Currently `response` is just a hash containing the response `body`, `headers` and `status`. Check [here](http://developer.android.com/google/gcm/http.html#response) to see how to interpret the responses.
+Currently `response` is just a hash containing the response `body`, `headers` and `status`. Check [here](https://developers.google.com/cloud-messaging/http#response) to see how to interpret the responses.
 
-## User Notifications
+## Device Group Messaging
 
-With [user notifications](http://developer.android.com/google/gcm/notifications.html), you can send a single message to multiple instance of an app running on devices owned by a single user. To use this feature, you will first need an initialised `GCM` class.
+With [device group messaging](https://developers.google.com/cloud-messaging/notifications), you can send a single message to multiple instance of an app running on devices belonging to a group. Typically, "group" refers a set of different devices that belong to a single user. However, a group could also represent a set of devices where the app instance functions in a highly correlated manner. To use this feature, you will first need an initialised `GCM` class.
 
-### Generate a Notification Key
-Then you will need a notification key which you can create for a particular `key_name` which needs to be uniquely named per app in case you have multiple apps for the same `project_id`.  This ensures that notifications only go to the intended target app. The `create` method will do this and return the token `notification_key` in the response:
+### Generate a Notification Key for device group
+Then you will need a notification key which you can create for a particular `key_name` which needs to be uniquely named per app in case you have multiple apps for the same `project_id`.  This ensures that notifications only go to the intended target app. The `create` method will do this and return the token `notification_key`, that represents the device group, in the response:
 
 ```ruby
 response = gcm.create(key_name: "appUser-Chris",
-                project_id: "my_project_id",
+                project_id: "my_project_id", # https://developers.google.com/cloud-messaging/gcm#senderid
                 registration_ids:["4", "8", "15", "16", "23", "42"])
 ```
 
@@ -120,6 +120,7 @@ The guide to set up an iOS app to get notifications is here: [Setting up a GCM C
 ### 0.1.1
 
 * Added helper `send_to_topic` to send messages to [topics](https://developers.google.com/cloud-messaging/topic-messaging).
+* Fixed documentation and updated base uri to `https://gcm-http.googleapis.com/gcm`
 
 ### 0.1.0
 * Added `send_with_notification_key` to send message to a notification key since the documented API for it is [wrong]( http://stackoverflow.com/questions/19720767/gcm-user-notifications-missing-registration-ids-field/25183892#25183892).
