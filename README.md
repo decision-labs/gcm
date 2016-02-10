@@ -1,7 +1,8 @@
-# Google Cloud Messaging for Android (GCM)
+# Google Cloud Messaging (GCM) for Android and iOS
 [![Gem Version](https://badge.fury.io/rb/gcm.svg)](http://badge.fury.io/rb/gcm) [![Build Status](https://secure.travis-ci.org/spacialdb/gcm.png?branch=master)](http://travis-ci.org/spacialdb/gcm)
 
-GCM sends notifications to Android devices via [GCM](https://developers.google.com/cloud-messaging/gcm).
+The GCM gem lets your ruby backend send notifications to Android and iOS devices via [
+Google Cloud Messaging](https://developers.google.com/cloud-messaging/gcm).
 
 ##Installation
 
