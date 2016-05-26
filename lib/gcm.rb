@@ -4,7 +4,7 @@ require 'json'
 
 class GCM
   include HTTParty
-  base_uri 'https://gcm-http.googleapis.com/gcm'
+  base_uri 'https://fcm.googleapis.com/fcm/send'
   default_timeout 30
   format :json
 
