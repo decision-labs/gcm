@@ -1,10 +1,16 @@
+# Google Cloud Messaging is now deprecated.
+
+Google Cloud Messaging has been deprecated in favor of Firebase Cloud Messaging. Please use the [`fcm` gem](https://github.com/spacialdb/fcm) moving forward.
+
+-----
+
 # Google Cloud Messaging (GCM) for Android and iOS
 [![Gem Version](https://badge.fury.io/rb/gcm.svg)](http://badge.fury.io/rb/gcm) [![Build Status](https://secure.travis-ci.org/spacialdb/gcm.png?branch=master)](http://travis-ci.org/spacialdb/gcm)
 
 The GCM gem lets your ruby backend send notifications to Android and iOS devices via [
 Google Cloud Messaging](https://developers.google.com/cloud-messaging/gcm).
 
-##Installation
+## Installation
 
     $ gem install gcm
 
@@ -14,7 +20,7 @@ or in your `Gemfile` just include it:
 gem 'gcm'
 ```
 
-##Requirements
+## Requirements
 
 An Android device running 2.3 (or newer) or an iOS device and an API key as per [GCM getting started guide](https://developers.google.com/cloud-messaging/android/start).
 
@@ -25,7 +31,7 @@ One of the following, tested Ruby versions:
 * `2.2.4`
 * `2.3.0`
 
-##Usage
+## Usage
 
 For your server to send a message to one or more devices, you must first initialise a new `GCM` class with your Api key, and then call the `send` method on this and give it 1 or more (up to 1000) registration tokens as an array of strings. You can also optionally send further [HTTP message parameters](https://developers.google.com/cloud-messaging/http-server-ref) like `data` or `time_to_live` etc. as a hash via the second optional argument to `send`.
 
