@@ -1,6 +1,8 @@
 # Google Cloud Messaging is now deprecated.
 
-Google Cloud Messaging has been deprecated in favor of Firebase Cloud Messaging. Please use the [`fcm` gem](https://github.com/spacialdb/fcm) moving forward.
+[Google Cloud Messaging has been deprecated in favor of Firebase Cloud Messaging](https://developers.google.com/cloud-messaging/android/android-migrate-fcm). Please use the [`fcm` gem](https://github.com/spacialdb/fcm) moving forward.
+
+> As of April 10, 2018, Google has deprecated GCM. The GCM server and client APIs are deprecated and will be removed as soon as April 11, 2019. Migrate GCM apps to [Firebase Cloud Messaging](http://firebase.google.com/docs/cloud-messaging/) (FCM), which inherits the reliable and scalable GCM infrastructure, plus many new features. See the [migration guide](https://developers.google.com/cloud-messaging/android/android-migrate-fcm) to learn more.
 
 -----
 
