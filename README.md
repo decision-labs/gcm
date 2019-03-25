@@ -152,11 +152,11 @@ The guide to set up an iOS app to get notifications is here: [Setting up a GCM C
 * Only support Ruby versions [>= 1.9.3](https://www.ruby-lang.org/en/news/2014/01/10/ruby-1-9-3-will-end-on-2015/)
 * Fixed Rspec deprecation warnings for Rspec 3.0.0.beta
 
-##MIT License
+## MIT License
 
 * Copyright (c) 2016 Kashif Rasul and Shoaib Burq. See LICENSE.txt for details.
 
-##Many thanks to all the contributors
+## Many thanks to all the contributors
 
 * [Contributors](https://github.com/spacialdb/gcm/contributors)
 
